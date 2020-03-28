@@ -1,0 +1,67 @@
+<html>
+<head>
+    <title>WebTest</title>
+</head>
+
+<body>
+
+   <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-database.js"></script>
+
+
+   
+   <script>
+     
+     //change this according to your database
+     var firebaseConfig = {
+       apiKey: "AIzaSyDgnntB3lfkRsvUU3UiPvy1Epw2H7RKLts",
+       authDomain: "webtest2-6c84c.firebaseapp.com",
+       databaseURL: "https://webtest2-6c84c.firebaseio.com",
+       projectId: "webtest2-6c84c",
+       storageBucket: "webtest2-6c84c.appspot.com",
+       messagingSenderId: "730303041399",
+       appId: "1:730303041399:web:0ac4f6e56a72c899bb9b72"
+     };
+     
+     firebase.initializeApp(firebaseConfig);
+     
+     var database =  firebase.database();
+     var ref= database.ref('scores');
+
+     ref.on('value', gotData, errData);
+
+//Runs when data is updated
+     function gotData(data)
+     {
+        var scores= data.val();
+        window.alert("New Data Inserted into Firebase");
+        console.log(scores);
+       
+     }
+
+//Runs when data is updated but error occurred 
+     function errData(err)
+     {
+        console.log("Error");
+        console.log(err);
+     }
+
+    //Sends data to firebase
+    function sendData()
+    {
+        var score=document.getElementById('sc').value;
+
+        ref.push(score);
+    }
+
+
+   </script>
+   
+    <form method="POST">
+        <input type="text" id="sc" placeholder="Send To Firebase">
+        <button type="submit" onclick="sendData()">Submit</button>
+    </form>
+
+</body>
+
+</html>
